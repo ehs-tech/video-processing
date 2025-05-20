@@ -1,0 +1,25 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-docker.pkg.dev/everyone-has-a-story-456910/ehs-backend/ehs-video-processing-app:${_IMAGE_TAG}', '.']
+
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-docker.pkg.dev/everyone-has-a-story-456910/ehs-backend/ehs-video-processing-app:${_IMAGE_TAG}']
+
+  # Tag the container image with 'latest'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'us-docker.pkg.dev/everyone-has-a-story-456910/ehs-backend/ehs-video-processing-app:${_IMAGE_TAG}', 'us-docker.pkg.dev/everyone-has-a-story-456910/ehs-backend/ehs-video-processing-app:latest']
+
+  # Push the 'latest' tag
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-docker.pkg.dev/everyone-has-a-story-456910/ehs-backend/ehs-video-processing-app:latest']
+
+images:
+  - 'us-docker.pkg.dev/everyone-has-a-story-456910/ehs-backend/ehs-video-processing-app:${_IMAGE_TAG}'
+  - 'us-docker.pkg.dev/everyone-has-a-story-456910/ehs-backend/ehs-video-processing-app:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+serviceAccount: projects/everyone-has-a-story-456910/serviceAccounts/pulumi-deployer@everyone-has-a-story-456910.iam.gserviceaccount.com 

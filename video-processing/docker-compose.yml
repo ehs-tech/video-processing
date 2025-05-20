@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  minio:
+    build:
+      context: .
+    ports:
+      - "5005:5000"
+    env_file: ./../.env
+    restart: always

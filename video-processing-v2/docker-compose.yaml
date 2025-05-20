@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  video-blur:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app:ro
+    environment:
+      - LOG_LEVEL=info
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4GB
